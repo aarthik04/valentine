@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine</title>
+
+<style>
+body {
+  background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+  font-family: 'Arial', sans-serif;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  width: 320px;
+  position: relative;
+  z-index: 10;
+}
+
+.emoji {
+  font-size: 60px;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  position: relative;
+  height: 80px;
+}
+
+button {
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background: #ff4d88;
+  color: white;
+}
+
+#yesBtn:hover {
+  transform: scale(1.1);
+}
+
+#noBtn {
+  background: #ddd;
+  position: absolute;
+}
+
+small {
+  display: block;
+  margin-top: 15px;
+  color: #777;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <div class="emoji">🐱💗</div>
+  <h1>Nirjara, will you be my Valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <small>"No" seems a bit shy 😳</small>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+// No button runs away
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 50;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Yes click celebration
+yesBtn.addEventListener("click", () => {
+  document.body.innerHTML = `
+    <h1 style="font-size:50px;color:#ff4d88;text-align:center;">
+      YAYYY 💖🥰 <br>
+      I Love You Forever!
+    </h1>
+  `;
+  confettiBoom();
+});
+
+// Floating hearts generator
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 10 + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 300);
+
+// Simple confetti
+function confettiBoom() {
+  for (let i = 0; i < 80; i++) {
+    const conf = document.createElement("div");
+    conf.innerHTML = "🎉";
+    conf.style.position = "absolute";
+    conf.style.left = Math.random() * 100 + "vw";
+    conf.style.top = Math.random() * 100 + "vh";
+    conf.style.fontSize = "20px";
+    document.body.appendChild(conf);
+
+    setTimeout(() => conf.remove(), 2000);
+  }
+}
+</script>
+
+</body>
+</html>
